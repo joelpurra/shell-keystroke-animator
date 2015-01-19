@@ -1,0 +1,178 @@
+#!/usr/bin/env bash
+set -e
+
+# Join an array as delimited string.
+# http://stackoverflow.com/a/17841619
+function join { local IFS="$1"; shift; echo -E "$*"; }
+
+function translateOnMac {
+	local char="$1"
+	shift
+
+	# List key codes:
+	# http://apple.stackexchange.com/questions/36943/how-do-i-automate-a-key-press-in-applescript
+	# http://apple.stackexchange.com/a/36947
+	# grep '^ *kVK' /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/HIToolbox.framework/Versions/A/Headers/Events.h|tr -d ,|while read x y z;do printf '%d %s %s\n' $z $z ${x#kVK_};done|sort -n
+
+	if [[ "$char" == "\"" ]];
+	then # 39 0x27 ANSI_Quote
+		echo "key code 39 using {shift down}"
+	elif [[ "$char" == $'\n' ]];
+	then # 36 0x24 Return
+		echo "key code 36"
+	else
+		echo "keystroke \"${char}\""
+	fi
+}
+
+function keystrokeOnMac {
+	local char="$1"
+	shift
+
+	local translated=$(translateOnMac "$char")
+
+	echo "tell application \"System Events\" to ${translated}" | osascript
+}
+
+function keystroke {
+	local char="$1"
+	shift
+
+	# TODO: other platforms?
+	keystrokeOnMac "$char"
+}
+
+function display {
+	echo -nE "$char"
+}
+
+function animator {
+	local animationOutputFilename="output.gif"
+	local -a filesAndSettings
+
+	while IFS= read -r -d '' file;
+	do
+		delay=$(echo "$file" | sed 's/.*_t\([[:digit:]][[:digit:]]*\).*/\1/g')
+
+		# 100 imagemagick ticks per seconds
+		filesAndSettings+=("-delay")
+		filesAndSettings+=("${delay}x100")
+		filesAndSettings+=("${file}")
+	done
+
+	convert -background "white" -flatten "${filesAndSettings[@]}" -layers "optimize" -loop 0 "$animationOutputFilename"
+}
+
+read -d '' getActiveWindowIdOnMacScript <<-'EOF' || true
+	tell application "System Events"
+		set frontApp to name of first application process whose frontmost is true
+	end tell
+	tell app frontApp to id of front window
+EOF
+
+function getActiveWindowIdOnMac {
+	echo "$getActiveWindowIdOnMacScript" | osascript
+}
+
+function getActiveWindowId {
+	# TODO: other platforms?
+	getActiveWindowIdOnMac
+}
+
+function screenshotOnMac {
+	local filename="${1}"
+	shift
+
+	local activeWindowId=$(getActiveWindowId)
+	screencapture -o "-l${activeWindowId}" "$filename"
+}
+
+function screenshot {
+	local index=$(printf "%05d" "$1")
+	shift
+	local seconds="${1:-0.05}"
+	shift
+
+	# 100 imagemagick ticks per seconds
+	local -i ticks="$(echo "${seconds} * 100" | bc | sed 's/\..*$//g')"
+
+	local filename="keystroke-animator_i${index}_t${ticks}.png"
+
+	screenshotOnMac "$filename"
+
+	echo "${filename}"
+}
+
+function typeKeysFromStdin {
+	local -r keySleep="${1:-0.05}"
+	shift
+	local -r lineSleep="${1:-1.0}"
+	shift
+
+	local screenshotList="screenshot-filelist.txt"
+	local -i screenshotIndex=0
+	local sleepSeconds
+	local -a screenshotFiles
+
+	[[ -s "$screenshotList" ]] && rm "$screenshotList"
+	touch "$screenshotList"
+
+	# Screenshot the initial state.
+	screenshot $(( screenshotIndex++ )) "$lineSleep" >>"$screenshotList"
+
+	while IFS= read -d '' -n 1 char; do
+		if [[ "$char" == $'\n' ]];
+		then
+			sleepSeconds="$lineSleep"
+
+			# Screenshot before and after return key.
+			# This allows typed terminal commands to be perceived before they flash by.
+			screenshot $(( screenshotIndex++ )) "$sleepSeconds" >>"$screenshotList"
+		else
+			sleepSeconds="$keySleep"
+		fi
+
+		display "$char"
+		keystroke "$char"
+
+		sleep "$sleepSeconds"
+		screenshot $(( screenshotIndex++ )) "$sleepSeconds" >>"$screenshotList"
+	done
+
+	# Screenshot final state, and hold for a while.
+	screenshot $(( screenshotIndex++ )) $(echo "5 * ${lineSleep}" | bc) >>"$screenshotList"
+
+	cat "$screenshotList" | tr '\n' '\0' | animator
+}
+
+function keystroker {
+	local -ri countdown="${1:-5}"
+	shift || true
+	local -r keySleep="${1:-0.05}"
+	shift || true
+	local -r lineSleep="${1:-1.0}"
+	shift || true
+
+	echo "keystroker: Now focus the window you want the typing to go in!"
+	for i in $(seq "$(( countdown - 1 ))" 0);
+	do
+		echo "keystroker: ${i}..."
+		sleep 1
+	done
+
+	echo "keystroker: Keystrokes are echoed in this window:"
+	typeKeysFromStdin "$keySleep" "$lineSleep"
+	echo "keystroker: End of input."
+}
+
+function main {
+	if [[ "$1" == "--animator" ]];
+	then
+		shift
+		animator "$@"
+	else
+		keystroker "$@"
+	fi
+}
+
+main "$@"
