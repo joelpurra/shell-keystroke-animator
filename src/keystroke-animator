@@ -58,9 +58,11 @@ function animator {
 		filesAndSettings+=("-delay")
 		filesAndSettings+=("${delay}x100")
 		filesAndSettings+=("${file}")
+		filesAndSettings+=("-alpha")
+		filesAndSettings+=("remove")
 	done
 
-	convert -background "white" -flatten "${filesAndSettings[@]}" -layers "optimize" -loop 0 "$animationOutputFilename"
+	convert -background "white" -alpha remove "${filesAndSettings[@]}" -layers "optimize" -loop 0 "$animationOutputFilename"
 }
 
 read -d '' getActiveWindowIdOnMacScript <<-'EOF' || true
@@ -84,7 +86,13 @@ function screenshotOnMac {
 	shift
 
 	local activeWindowId=$(getActiveWindowId)
-	screencapture -o "-l${activeWindowId}" "$filename"
+
+	if [[ "$config_withShadow" == "false" ]];
+	then
+		screencapture -o "-l${activeWindowId}" "$filename"
+	else
+		screencapture "-l${activeWindowId}" "$filename"
+	fi
 }
 
 function screenshot {
@@ -146,6 +154,12 @@ function typeKeysFromStdin {
 }
 
 function keystroker {
+	if [[ "$1" == "--no-shadow" ]];
+	then
+		config_withShadow="false"
+		shift
+	fi
+
 	local -ri countdown="${1:-5}"
 	shift || true
 	local -r keySleep="${1:-0.05}"
@@ -174,5 +188,7 @@ function main {
 		keystroker "$@"
 	fi
 }
+
+declare config_withShadow="true"
 
 main "$@"
