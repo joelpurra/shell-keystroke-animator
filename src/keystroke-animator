@@ -116,6 +116,8 @@ function typeKeysFromStdin {
 	shift
 	local -r lineSleep="${1:-1.0}"
 	shift
+	local -r endSleep="${1:-5.0}"
+	shift
 
 	local screenshotList="screenshot-filelist.txt"
 	local -i screenshotIndex=0
@@ -148,7 +150,7 @@ function typeKeysFromStdin {
 	done
 
 	# Screenshot final state, and hold for a while.
-	screenshot $(( screenshotIndex++ )) $(echo "5 * ${lineSleep}" | bc) >>"$screenshotList"
+	screenshot $(( screenshotIndex++ )) "$endSleep" >>"$screenshotList"
 
 	cat "$screenshotList" | tr '\n' '\0' | animator
 }
@@ -166,6 +168,8 @@ function keystroker {
 	shift || true
 	local -r lineSleep="${1:-1.0}"
 	shift || true
+	local -r endSleep="${1:-5.0}"
+	shift || true
 
 	echo "keystroker: Now focus the window you want the typing to go in!"
 	for i in $(seq "$(( countdown - 1 ))" 0);
@@ -175,7 +179,7 @@ function keystroker {
 	done
 
 	echo "keystroker: Keystrokes are echoed in this window:"
-	typeKeysFromStdin "$keySleep" "$lineSleep"
+	typeKeysFromStdin "$keySleep" "$lineSleep" "$endSleep"
 	echo "keystroker: End of input."
 }
 

@@ -48,7 +48,7 @@ Create repeatable, editable, automatable example usage of:
 Running the software creates a series of `.png` images, and an `output.gif`.
 
 ```bash
-cat "my-keys.txt" | keystroke-animator [--no-shadow] [countdown [keysleep [linesleep]]]
+cat "my-keys.txt" | keystroke-animator [--no-shadow] [countdown [keysleep [linesleep [endsleep]]]]
 ```
 
 - `my-keys.txt` Sequence of keys/characters to read from `stdin` and then "type", one by one.
@@ -56,6 +56,7 @@ cat "my-keys.txt" | keystroke-animator [--no-shadow] [countdown [keysleep [lines
 - `countdown` Pre-script countdown, in integer seconds (optional).
 - `keysleep` Time to sleep between keys, in seconds (optional).
 - `linesleep` Time to sleep between lines, in seconds (optional).
+- `endsleep` Time to sleep at the end of the animation, in seconds (optional).
 
 
 
