@@ -1,6 +1,6 @@
 # [shell-keystroke-animator](https://github.com/joelpurra/shell-keystroke-animator)
 
-Simulate stroking keys, based on characters from `stdin`, while taking screenshots of the application window to create a `.gif` animation.
+Simulate stroking keyboard keys into another application/window while taking screenshots to create a `.gif` animation.
 
 Create repeatable, editable, automatable example usage of:
 
@@ -45,11 +45,15 @@ Create repeatable, editable, automatable example usage of:
 
 ## Usage
 
-Running the software creates a series of `.png` images, and an `output.gif`.
+Quickly focus another application/window, where you want your keystrokes to go and animation be created from, as soon as you've started `keystroke-animator`.
+
+Running the software creates a series of `.png` images, and an `output.gif` in the same folder you started it from (`$PWD`).
+
 
 ```bash
 cat "my-keys.txt" | keystroke-animator [--no-shadow] [countdown [keysleep [linesleep [endsleep]]]]
 ```
+
 
 - `my-keys.txt` Sequence of keys/characters to read from `stdin` and then "type", one by one.
 - `--no-shadow` Turn off application window shadows (optional). Useful if the background of the window isn't white.
