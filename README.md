@@ -18,6 +18,21 @@ Create repeatable, editable, automatable example usage of:
 
 
 
+## Installation
+
+### On Mac with Homebrew
+
+```bash
+brew tap joelpurra/joelpurra
+brew install shell-keystroke-animator
+```
+
+### On other systems
+
+Clone or download, then either use `shell-keystroke-animator/src/keystroke-animator` directly where you put it, or symlink `keystroke-animator`.
+
+
+
 ## Examples
 
 <p align="center">
