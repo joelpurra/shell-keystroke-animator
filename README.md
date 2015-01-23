@@ -20,16 +20,16 @@ Create repeatable, editable, automatable example usage of:
 
 ## Installation
 
-### On Mac with Homebrew
+On Mac with [Homebrew](http://brew.sh/):
 
 ```bash
 brew tap joelpurra/joelpurra
 brew install shell-keystroke-animator
 ```
 
-### On other systems
+On other systems:
 
-Clone or download, then either use `shell-keystroke-animator/src/keystroke-animator` directly where you put it, or symlink `keystroke-animator`.
+Clone or download, then either use `shell-keystroke-animator/src/keystroke-animator` directly where you put it, or symlink `keystroke-animator`. Required [bash](https://www.gnu.org/software/bash/) 4+ and [ImageMagick](http://www.imagemagick.org/). Note that `shell-keystroke-animator` is not expected to work on anything but Mac OS X, without modifications.
 
 
 
