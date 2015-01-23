@@ -1,3 +1,10 @@
+<p align="center">
+  <a href="https://github.com/joelpurra/shell-keystroke-animator">
+    <img src="https://cloud.githubusercontent.com/assets/1398544/5870690/b476196a-a2d2-11e4-885b-1532bea27749.gif" alt="shell-keystroke-animator in action" border="0" />
+  </a>
+</p>
+
+
 # [shell-keystroke-animator](https://github.com/joelpurra/shell-keystroke-animator)
 
 Simulate stroking keyboard keys into another application/window while taking screenshots to create a `.gif` animation.
@@ -11,6 +18,8 @@ Create repeatable, editable, automatable example usage of:
 
 
 
+## Examples
+
 <p align="center">
   <a href="https://cloud.githubusercontent.com/assets/1398544/5851864/9f8eb82e-a20d-11e4-9c05-a33de1558be3.gif">
     <img src="https://cloud.githubusercontent.com/assets/1398544/5851864/9f8eb82e-a20d-11e4-9c05-a33de1558be3.gif" alt="shell-keystroke-animator Google search demo" width="50%" border="0" />
@@ -20,6 +29,12 @@ Create repeatable, editable, automatable example usage of:
 <p align="center">
   <a href="https://github.com/joelpurra/shell-keystroke-animator">
     <img src="https://cloud.githubusercontent.com/assets/1398544/5851982/9e88415a-a20f-11e4-8976-9a3fedeb54a0.gif" alt="shell-keystroke-animator Terminal demo" border="0" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/joelpurra/jqnpm">
+    <img src="https://cloud.githubusercontent.com/assets/1398544/5852881/aaefa09c-a21d-11e4-9e7b-7c2c5574e0b6.gif" alt="jqnpm in action" border="0" />
   </a>
 </p>
 
@@ -36,11 +51,10 @@ Create repeatable, editable, automatable example usage of:
 </p>
 
 <p align="center">
-  <a href="https://github.com/joelpurra/npshell/">
+  <a href="https://github.com/joelpurra/npshell">
     <img src="https://cloud.githubusercontent.com/assets/1398544/5836151/b8d8e31e-a171-11e4-8412-d23765b54a25.gif" alt="npshell in action" border="0" />
   </a>
 </p>
-
 
 
 ## Usage
@@ -66,6 +80,7 @@ cat "my-keys.txt" | keystroke-animator [--no-shadow] [countdown [keysleep [lines
 
 ## Limitations
 
+- Doesn't work great with Terminal commands which take longer than `linesleep` to execute fully.
 - The software isn't designed to handle special characters. Only linebreaks (`\n`) are treated differently, and is sent as the <kbd>&crarr;</kbd> (return) key.
 - Tested on Mac OS X 10.10 Yosemite - please add support for any other platforms you like!
 
