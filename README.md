@@ -20,7 +20,7 @@ Create repeatable, editable, automatable example usage of:
 
 ## Installation
 
-On Mac with [Homebrew](http://brew.sh/):
+On Mac with [Homebrew](https://brew.sh/):
 
 ```bash
 brew tap joelpurra/joelpurra
@@ -29,7 +29,7 @@ brew install shell-keystroke-animator
 
 On other systems:
 
-Clone or download, then either use `shell-keystroke-animator/src/keystroke-animator` directly where you put it, or symlink `keystroke-animator`. Required [bash](https://www.gnu.org/software/bash/) 4+ and [ImageMagick](http://www.imagemagick.org/). Note that `shell-keystroke-animator` is not expected to work on anything but Mac OS X, without modifications.
+Clone or download, then either use `shell-keystroke-animator/src/keystroke-animator` directly where you put it, or symlink `keystroke-animator`. Required [bash](https://www.gnu.org/software/bash/) 4+ and [ImageMagick](https://www.imagemagick.org/). Note that `shell-keystroke-animator` is not expected to work on anything but Mac OS X, without modifications.
 
 
 
@@ -102,14 +102,14 @@ cat "my-keys.txt" | keystroke-animator [--no-shadow] [countdown [keysleep [lines
 ## Kudos
 
 - [`ttygif`](https://github.com/icholy/ttygif) and [`ttyrec`](https://github.com/mjording/ttyrec)For inspiration. Shame I couldn't get those programs to work properly.
-- [houbysoft's](http://houbysoft.com) [AskDifferent answer](http://apple.stackexchange.com/a/63899) to the question [Can a Mac be programmed to simulate pressing a key at a certain rate via software?](http://apple.stackexchange.com/questions/63897/can-a-mac-be-programmed-to-simulate-pressing-a-key-at-a-certain-rate-via-softwar)
+- [houbysoft's](https://houbysoft.com)/ [AskDifferent answer](https://apple.stackexchange.com/a/63899) to the question [Can a Mac be programmed to simulate pressing a key at a certain rate via software?](https://apple.stackexchange.com/questions/63897/can-a-mac-be-programmed-to-simulate-pressing-a-key-at-a-certain-rate-via-softwar)
 
 
 
 ---
 
 ## License
-Copyright (c) 2015 Joel Purra <http://joelpurra.com/>
+Copyright (c) 2015 Joel Purra <https://joelpurra.com/>
 All rights reserved.
 
 When using **shell-keystroke-animator**, comply to the MIT license. Please see the LICENSE file for details.

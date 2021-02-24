@@ -2,7 +2,7 @@
 set -e
 
 # Join an array as delimited string.
-# http://stackoverflow.com/a/17841619
+# https://stackoverflow.com/a/17841619
 function join { local IFS="$1"; shift; echo -E "$*"; }
 
 function translateOnMac {
@@ -10,8 +10,8 @@ function translateOnMac {
 	shift
 
 	# List key codes:
-	# http://apple.stackexchange.com/questions/36943/how-do-i-automate-a-key-press-in-applescript
-	# http://apple.stackexchange.com/a/36947
+	# https://apple.stackexchange.com/questions/36943/how-do-i-automate-a-key-press-in-applescript
+	# https://apple.stackexchange.com/a/36947
 	# grep '^ *kVK' /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/HIToolbox.framework/Versions/A/Headers/Events.h|tr -d ,|while read x y z;do printf '%d %s %s\n' $z $z ${x#kVK_};done|sort -n
 
 	if [[ "$char" == "\"" ]];

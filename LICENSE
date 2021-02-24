@@ -1,5 +1,5 @@
 shell-keystroke-animator shell script. Simulate stroking keys, based on characters from stdin, while taking screenshots to create a .gif animation.
-Copyright (c) 2015 Joel Purra <http://joelpurra.com/>
+Copyright (c) 2015 Joel Purra <https://joelpurra.com/>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
